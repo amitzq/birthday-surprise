@@ -6,7 +6,6 @@
 body{
 margin:0;
 font-family:Arial;
-background:#0f0f0f;
 color:white;
 text-align:center;
 height:100vh;
@@ -15,6 +14,10 @@ justify-content:center;
 align-items:center;
 flex-direction:column;
 overflow:hidden;
+
+/* BEAUTIFUL GRADIENT BACKGROUND */
+
+background:linear-gradient(135deg,#ff758c,#ff7eb3,#8f5cff);
 }
 
 /* TAP BOX */
@@ -24,11 +27,11 @@ border:3px solid black;
 padding:25px 40px;
 font-size:22px;
 cursor:pointer;
-background:rgba(255,255,255,0.05);
-border-radius:10px;
+background:rgba(255,255,255,0.15);
+border-radius:12px;
 }
 
-/* PAGE 2 */
+/* PAGE2 */
 
 #page2{
 display:none;
@@ -45,7 +48,7 @@ margin-top:20px;
 }
 
 .box{
-background:rgba(255,255,255,0.1);
+background:rgba(255,255,255,0.2);
 padding:14px;
 border-radius:10px;
 width:70px;
@@ -64,8 +67,8 @@ font-size:12px;
 
 .heart{
 position:absolute;
-color:#ff4d6d;
-font-size:15px;
+color:#ff2e63;
+font-size:16px;
 animation:rise 6s linear infinite;
 }
 
@@ -78,15 +81,15 @@ animation:rise 6s linear infinite;
 
 #birthdayMsg{
 display:none;
-font-size:32px;
+font-size:34px;
 margin-top:30px;
 }
 
-</style></head><body><!-- PAGE 1 --><div id="page1">
+</style></head><body><div id="page1">
 <div class="tapBox" onclick="openPage()">
 🎁 Tap For Your Surprise
 </div>
-</div><!-- PAGE 2 --><div id="page2"><h2>⏳ Countdown To Midnight</h2><div class="countdown"><div class="box">
+</div><div id="page2"><h2>⏳ Countdown To Midnight</h2><div class="countdown"><div class="box">
 <div id="hours" class="number">00</div>
 <div class="label">Hours</div>
 </div><div class="box">
@@ -99,7 +102,7 @@ margin-top:30px;
 🎉 Happy Birthday Sriyanka 🫶❤️
 </div></div><script>
 
-/* HEARTS */
+/* HEART ANIMATION */
 
 function heart(){
 
@@ -121,7 +124,7 @@ h.remove();
 
 setInterval(heart,400);
 
-/* OPEN COUNTDOWN */
+/* OPEN PAGE */
 
 function openPage(){
 
