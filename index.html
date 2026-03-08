@@ -15,8 +15,6 @@ align-items:center;
 flex-direction:column;
 overflow:hidden;
 
-/* BEAUTIFUL GRADIENT BACKGROUND */
-
 background:linear-gradient(135deg,#ff758c,#ff7eb3,#8f5cff);
 }
 
@@ -31,7 +29,7 @@ background:rgba(255,255,255,0.15);
 border-radius:12px;
 }
 
-/* PAGE2 */
+/* PAGE 2 */
 
 #page2{
 display:none;
@@ -77,8 +75,6 @@ animation:rise 6s linear infinite;
 100%{transform:translateY(-10vh);}
 }
 
-/* BIRTHDAY MESSAGE */
-
 #birthdayMsg{
 display:none;
 font-size:34px;
@@ -102,26 +98,16 @@ margin-top:30px;
 🎉 Happy Birthday Sriyanka 🫶❤️
 </div></div><script>
 
-/* HEART ANIMATION */
+/* HEARTS */
 
 function heart(){
-
 var h=document.createElement("div");
-
 h.className="heart";
-
 h.innerHTML="❤";
-
 h.style.left=Math.random()*100+"vw";
-
 document.body.appendChild(h);
-
-setTimeout(function(){
-h.remove();
-},6000);
-
+setTimeout(function(){h.remove()},6000);
 }
-
 setInterval(heart,400);
 
 /* OPEN PAGE */
@@ -129,43 +115,42 @@ setInterval(heart,400);
 function openPage(){
 
 document.getElementById("page1").style.display="none";
-
 document.getElementById("page2").style.display="flex";
 
 var midnight=new Date();
-
 midnight.setHours(24,0,0,0);
 
 var timer=setInterval(function(){
 
 var now=new Date().getTime();
-
 var distance=midnight-now;
 
 var hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-
 var minutes=Math.floor((distance%(1000*60*60))/(1000*60));
-
 var seconds=Math.floor((distance%(1000*60))/1000);
 
 document.getElementById("hours").innerHTML=hours;
-
 document.getElementById("minutes").innerHTML=minutes;
-
 document.getElementById("seconds").innerHTML=seconds;
 
 if(distance<=0){
-
 clearInterval(timer);
-
 document.querySelector(".countdown").style.display="none";
-
 document.getElementById("birthdayMsg").style.display="block";
-
 }
 
 },1000);
 
+}
+
+/* VERSION UPDATE FIX */
+
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.getRegistrations().then(function(registrations) {
+for(let registration of registrations) {
+registration.unregister();
+}
+});
 }
 
 </script></body>
