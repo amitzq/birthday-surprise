@@ -1,86 +1,58 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Birthday Surprise</title><style>
 
 body{
 margin:0;
+font-family:Arial;
+background:#0f0f0f;
+color:white;
+text-align:center;
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-font-family:Arial;
-background:#0b0b0b;
-color:white;
-text-align:center;
+flex-direction:column;
 overflow:hidden;
-}
-
-/* HEART BACKGROUND */
-
-.heart{
-position:absolute;
-color:#ff4d6d;
-font-size:16px;
-animation:rise 6s linear infinite;
-}
-
-@keyframes rise{
-0%{transform:translateY(100vh);opacity:1;}
-100%{transform:translateY(-10vh);opacity:0;}
 }
 
 /* TAP BOX */
 
-#tap{
-background:rgba(255,255,255,0.08);
-padding:22px 35px;
-border-radius:15px;
+.tapBox{
+border:3px solid black;
+padding:25px 40px;
+font-size:22px;
 cursor:pointer;
-box-shadow:0 0 15px #ff4d6d;
-transition:0.3s;
+background:rgba(255,255,255,0.05);
+border-radius:10px;
 }
 
-#tap:hover{
-transform:scale(1.05);
-}
+/* PAGE 2 */
 
-#tap h2{
-font-size:20px;
-margin:0;
-}
-
-/* MAIN */
-
-#main{
+#page2{
 display:none;
-animation:fade 1s ease;
-}
-
-@keyframes fade{
-from{opacity:0;}
-to{opacity:1;}
+flex-direction:column;
+align-items:center;
 }
 
 /* COUNTDOWN */
 
 .countdown{
 display:flex;
-gap:14px;
+gap:15px;
 margin-top:20px;
-justify-content:center;
 }
 
 .box{
 background:rgba(255,255,255,0.1);
 padding:14px;
 border-radius:10px;
-width:75px;
+width:70px;
 }
 
 .number{
-font-size:24px;
+font-size:22px;
 font-weight:bold;
 }
 
@@ -88,14 +60,33 @@ font-weight:bold;
 font-size:12px;
 }
 
-#msg{
-margin-top:25px;
-font-size:24px;
+/* HEARTS */
+
+.heart{
+position:absolute;
+color:#ff4d6d;
+font-size:15px;
+animation:rise 6s linear infinite;
 }
 
-</style></head><body><div id="tap" onclick="start()">
-<h2>🎁 Tap For Your Surprise</h2>
-</div><div id="main"><h3>⏳ Countdown To Midnight</h3><div class="countdown"><div class="box">
+@keyframes rise{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
+}
+
+/* BIRTHDAY MESSAGE */
+
+#birthdayMsg{
+display:none;
+font-size:32px;
+margin-top:30px;
+}
+
+</style></head><body><!-- PAGE 1 --><div id="page1">
+<div class="tapBox" onclick="openPage()">
+🎁 Tap For Your Surprise
+</div>
+</div><!-- PAGE 2 --><div id="page2"><h2>⏳ Countdown To Midnight</h2><div class="countdown"><div class="box">
 <div id="hours" class="number">00</div>
 <div class="label">Hours</div>
 </div><div class="box">
@@ -104,60 +95,69 @@ font-size:24px;
 </div><div class="box">
 <div id="seconds" class="number">00</div>
 <div class="label">Seconds</div>
-</div></div><div id="msg"></div></div><script>
+</div></div><div id="birthdayMsg">
+🎉 Happy Birthday Sriyanka 🫶❤️
+</div></div><script>
 
 /* HEARTS */
 
-function createHeart(){
+function heart(){
 
-let h=document.createElement("div");
+var h=document.createElement("div");
+
 h.className="heart";
+
 h.innerHTML="❤";
 
 h.style.left=Math.random()*100+"vw";
 
 document.body.appendChild(h);
 
-setTimeout(()=>{
-
+setTimeout(function(){
 h.remove();
-
 },6000);
 
 }
 
-setInterval(createHeart,350);
+setInterval(heart,400);
 
-/* START */
+/* OPEN COUNTDOWN */
 
-function start(){
+function openPage(){
 
-document.getElementById("tap").style.display="none";
-document.getElementById("main").style.display="block";
+document.getElementById("page1").style.display="none";
 
-let midnight=new Date();
+document.getElementById("page2").style.display="flex";
+
+var midnight=new Date();
+
 midnight.setHours(24,0,0,0);
 
-let timer=setInterval(function(){
+var timer=setInterval(function(){
 
-let now=new Date().getTime();
-let distance=midnight-now;
+var now=new Date().getTime();
 
-let hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-let minutes=Math.floor((distance%(1000*60*60))/(1000*60));
-let seconds=Math.floor((distance%(1000*60))/1000);
+var distance=midnight-now;
+
+var hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+
+var minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+
+var seconds=Math.floor((distance%(1000*60))/1000);
 
 document.getElementById("hours").innerHTML=hours;
+
 document.getElementById("minutes").innerHTML=minutes;
+
 document.getElementById("seconds").innerHTML=seconds;
 
-if(distance<0){
+if(distance<=0){
 
 clearInterval(timer);
 
 document.querySelector(".countdown").style.display="none";
 
-document.getElementById("msg").innerHTML="🎉 Happy Birthday Sriyanka 🎂❤️";
+document.getElementById("birthdayMsg").style.display="block";
 
 }
 
