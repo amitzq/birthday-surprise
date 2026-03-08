@@ -10,89 +10,92 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-text-align:center;
 font-family:Arial;
+background:#0b0b0b;
 color:white;
+text-align:center;
 overflow:hidden;
-background:#111;
 }
 
-/* LOVE HEART BACKGROUND */
+/* HEART BACKGROUND */
 
 .heart{
 position:absolute;
 color:#ff4d6d;
-font-size:20px;
-animation:float 6s linear infinite;
+font-size:16px;
+animation:rise 6s linear infinite;
 }
 
-@keyframes float{
-0%{
-transform:translateY(100vh);
-opacity:1;
-}
-100%{
-transform:translateY(-10vh);
-opacity:0;
-}
+@keyframes rise{
+0%{transform:translateY(100vh);opacity:1;}
+100%{transform:translateY(-10vh);opacity:0;}
 }
 
-/* TAP SCREEN */
+/* TAP BOX */
 
-#tapScreen{
-font-size:28px;
+#tap{
+background:rgba(255,255,255,0.08);
+padding:22px 35px;
+border-radius:15px;
 cursor:pointer;
-padding:20px 40px;
-background:#ff4d6d;
-border-radius:40px;
-box-shadow:0 0 20px #ff4d6d;
+box-shadow:0 0 15px #ff4d6d;
+transition:0.3s;
 }
 
-/* MAIN CONTAINER */
+#tap:hover{
+transform:scale(1.05);
+}
+
+#tap h2{
+font-size:20px;
+margin:0;
+}
+
+/* MAIN */
 
 #main{
 display:none;
+animation:fade 1s ease;
 }
 
-.container{
-background:rgba(0,0,0,0.6);
-padding:35px;
-border-radius:20px;
+@keyframes fade{
+from{opacity:0;}
+to{opacity:1;}
 }
 
 /* COUNTDOWN */
 
 .countdown{
 display:flex;
-gap:18px;
-justify-content:center;
+gap:14px;
 margin-top:20px;
+justify-content:center;
 }
 
 .box{
 background:rgba(255,255,255,0.1);
-padding:18px;
-border-radius:12px;
-width:80px;
+padding:14px;
+border-radius:10px;
+width:75px;
 }
 
 .number{
-font-size:28px;
+font-size:24px;
 font-weight:bold;
 }
 
 .label{
-font-size:14px;
+font-size:12px;
 }
 
 #msg{
 margin-top:25px;
-font-size:28px;
+font-size:24px;
 }
 
-</style></head><body><div id="tapScreen" onclick="start()">
-🎁 Tap For Your Surprise
-</div><div id="main"><div class="container"><h2>⏳ Countdown Begins ⏳</h2><div class="countdown"><div class="box">
+</style></head><body><div id="tap" onclick="start()">
+<h2>🎁 Tap For Your Surprise</h2>
+</div><div id="main"><h3>⏳ Countdown To Midnight</h3><div class="countdown"><div class="box">
 <div id="hours" class="number">00</div>
 <div class="label">Hours</div>
 </div><div class="box">
@@ -101,71 +104,60 @@ font-size:28px;
 </div><div class="box">
 <div id="seconds" class="number">00</div>
 <div class="label">Seconds</div>
-</div></div><div id="msg"></div></div></div><script>
+</div></div><div id="msg"></div></div><script>
 
-/* HEART ANIMATION */
+/* HEARTS */
 
 function createHeart(){
 
-var heart=document.createElement("div");
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤";
 
-heart.className="heart";
+h.style.left=Math.random()*100+"vw";
 
-heart.innerHTML="❤";
-
-heart.style.left=Math.random()*100+"vw";
-
-heart.style.fontSize=(Math.random()*20+15)+"px";
-
-document.body.appendChild(heart);
+document.body.appendChild(h);
 
 setTimeout(()=>{
 
-heart.remove();
+h.remove();
 
 },6000);
 
 }
 
-setInterval(createHeart,300);
+setInterval(createHeart,350);
 
-/* TAP START */
+/* START */
 
 function start(){
 
-document.getElementById("tapScreen").style.display="none";
-
+document.getElementById("tap").style.display="none";
 document.getElementById("main").style.display="block";
 
-var midnight=new Date();
-
+let midnight=new Date();
 midnight.setHours(24,0,0,0);
 
-var x=setInterval(function(){
+let timer=setInterval(function(){
 
-var now=new Date().getTime();
+let now=new Date().getTime();
+let distance=midnight-now;
 
-var distance=midnight-now;
-
-var hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-
-var minutes=Math.floor((distance%(1000*60*60))/(1000*60));
-
-var seconds=Math.floor((distance%(1000*60))/1000);
+let hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+let minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+let seconds=Math.floor((distance%(1000*60))/1000);
 
 document.getElementById("hours").innerHTML=hours;
-
 document.getElementById("minutes").innerHTML=minutes;
-
 document.getElementById("seconds").innerHTML=seconds;
 
 if(distance<0){
 
-clearInterval(x);
+clearInterval(timer);
 
 document.querySelector(".countdown").style.display="none";
 
-document.getElementById("msg").innerHTML="🎉 Happy Birthday Sriyanka 🎂❤";
+document.getElementById("msg").innerHTML="🎉 Happy Birthday Sriyanka 🎂❤️";
 
 }
 
